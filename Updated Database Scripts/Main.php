@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HigherBooru</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <style>
+      /* Add styles for the navigation bar */
+      .navbar {
+        background-color: #333;
+        overflow: hidden;
+      }
+      
+      /* Style the links inside the navigation bar */
+      .navbar a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      
+      /* Style the dropdown menu */
+      .dropdown {
+        float: left;
+        overflow: hidden;
+      }
+      
+      /* Style the dropdown button */
+      .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        margin: 0;
+      }
+      
+      /* Style the dropdown content */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      }
+      
+      /* Style the links inside the dropdown */
+      .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+      }
+      
+      /* Add a hover effect for links inside the dropdown */
+      .dropdown-content a:hover {
+        background-color: #ddd;
+      }
+      
+      /* Show the dropdown menu when the user moves the mouse over the dropdown button */
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      body {
+        background-color:  #101016;
+        color: white;
+      }
+
+      .banner {
+        padding-top: 12rem;
+        padding-left: 16rem;
+        padding-right: 16rem;;
+      }
+
+      .banner .header {
+
+      }
+
+      h1.Title {
+        padding-bottom: 10px;
+      }
+
+      h2.header-1 {
+        padding-top: 10px;
+      }
+
+      .main {
+        padding-left: 16rem;
+        padding-right: 16rem;
+        padding-bottom: 4rem;
+        border-top: 1px solid rgba(255,255,255,0.5);
+      }
+
+      .main .main-1 {
+      }
+
+      .main .gallery {
+
+      }
+
+      .main .header-1 {
+
+      }
+
+            /* Set up the grid layout */
+        .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 5fr);
+        grid-gap: 10px;
+        padding-left: 16rem;
+        padding-right: 16rem;
+      }
+      
+      /* Set up the image containers */
+      .image-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 133.33%; /* 3:4 aspect ratio */
+        overflow: hidden;
+      }
+      
+      /* Style the images */
+      .image-container img {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-info {
+        padding-bottom: 2rem;
+      }
+      
+      /* Hide all pages except the first one */
+      .page {
+        display: none;
+      }
+      .page:first-of-type {
+        display: grid;
+      }
+      
+      /* Style the pagination buttons */
+      .page-navigation {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .page-navigation button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: none;
+        background-color: #eee;
+        cursor: pointer;
+      }
+      .page-navigation button:hover {
+        background-color: #ccc;
+      }
+      .page-navigation button.active {
+        background-color: #ddd;
+      }
+      
+    </style>
+</head>
+  <body>
+    <div class="navbar">
+      <a href ="index.php">Upload</a>
+      <a href ="logout.php">Logout</a>
+      <div class="dropdown">
+        <button class="dropbtn">Menu &#9660;</button>
+        <div class="dropdown-content">
+          <a href="Main.php">Home</a>
+          <a href="Works.php">Works</a>
+          <a href="About.php">About</a>
+          
+        </div>
+      </div> 
+    </div>
+    
+    <header class="banner">
+    
+      <div class="header">
+        <h1 class="Title">HigherBooru</h1>
+    </header>
+
+    <div class="main" id="page-content">
+      <main class="main-1">
+        <section class="gallery">
+          <h2 class="header-1">Artworks</h2>
+        </section>
+      </main>
+    </div>
+    <div class="grid" id="image-grid">
+    <?php
+
+$limit = 20;
+$num_columns = 4;
+$images = glob("images/*.{jpg,jpeg,png,gif}", GLOB_BRACE);
+
+// Sort the images by date created
+usort($images, function($a, $b) {
+  return filemtime($b) - filemtime($a);
+});
+
+// Calculate the total number of pages
+$total_pages = ceil(count($images) / $limit);
+
+// Get the current page from the query string
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Calculate the offset for the images
+$offset = ($page - 1) * $limit;
+
+// Initialize the column index
+$column_index = 0;
+
+// Loop through the images and display them in the grid
+for ($i = 0; $i < count($images); $i++) {
+  // Skip images that are not within the current page
+  if ($i < $offset || $i >= $offset + $limit) {
+    continue;
+  }
+
+  // Get the image filename
+  $filename = $images[$i];
+  
+  // Image container
+  echo '<div class="image-container" style=grid-column: ' . ($column_index + 1) . ';">';
+  echo '<img src="' . $filename . '">';
+  echo '</div>';
+
+  // Increment the column index and reset it if necessary
+  $column_index++;
+  if ($column_index >= $num_columns) {
+    $column_index = 0;
+  }
+}
+
+// Output the closing tag for the grid container div
+echo '</div>';
+
+// Add a new div for the page navigation links
+echo '<div class="page-navigation">';
+
+// Link to first page
+if ($page > 1) {
+  echo '<a href="?page=1">&laquo;</a>';
+} else {
+  echo '<span class="disabled">&laquo;</span>';
+}
+
+// Link to previous page
+if ($page > 1) {
+  echo '<a href="?page=' . ($page - 1) . '">&lsaquo;</a>';
+} else {
+  echo '<span class="disabled">&lsaquo;</span>';
+}
+
+// Output links to individual pages
+$start = max(1, $page - 5);
+$end = min($total_pages, $page + 5);
+
+if ($start > 1) {
+  echo '<span class="ellipsis">&hellip;</span>';
+}
+
+for ($p = $start; $p <= $end; $p++) {
+  if ($p == $page) {
+    echo '<span class="current-page">' . $page . '</span>';
+  } else {
+    echo '<a href="?page=' . $p . '">' . $p . '</a>';
+  }
+}
+
+if ($end < $total_pages) {
+  echo '<span class="ellipsis">&hellip;</span>';
+}
+
+// Link to next page
+if ($page < $total_pages) {
+  echo '<a href="?page=' . ($page + 1) . '">&rsaquo;</a>';
+} else {
+  echo '<span class="disabled">&rsaquo;</span>';
+}
+
+// Link to last page
+if ($page < $total_pages) {
+  echo '<a href="?page=' . $total_pages . '">&raquo;</a>';
+} else {
+  echo '<span class="disabled">&raquo;</span>';
+}
+
+echo '</div>';
+
+?>
+
+  <script>
+
+    
+    // // Select all navigation buttons
+    // const pageButtons = document.querySelectorAll('.page-button');
+    
+    // // Add a click event listener to each button
+    // pageButtons.forEach(button => {
+    //   button.addEventListener('click', () => {
+    //     // Get the page number from the data-page attribute
+    //     const pageNumber = button.dataset.page;
+        
+    //     // Hide all pages except the one with the selected page number
+    //     const pages = document.querySelectorAll('.page');
+    //     pages.forEach(page => {
+    //       if (page.id === 'page-' + pageNumber) {
+    //         page.style.display = 'grid';
+    //       } else {
+    //         page.style.display = 'none';
+    //       }
+    //     });
+    //   });
+    // });
+      
+
+
+    </script> 
+  </body>
+  
+</html>
