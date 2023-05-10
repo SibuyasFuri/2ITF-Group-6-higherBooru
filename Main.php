@@ -203,6 +203,11 @@ $limit = 20;
 $num_columns = 4;
 $images = glob("images/*.{jpg,jpeg,png,gif}", GLOB_BRACE);
 
+// Sort the images by date created
+usort($images, function($a, $b) {
+  return filemtime($b) - filemtime($a);
+});
+
 // Calculate the total number of pages
 $total_pages = ceil(count($images) / $limit);
 
@@ -269,26 +274,26 @@ if ($page < $total_pages) {
   <script>
 
     
-    // Select all navigation buttons
-    const pageButtons = document.querySelectorAll('.page-button');
+    // // Select all navigation buttons
+    // const pageButtons = document.querySelectorAll('.page-button');
     
-    // Add a click event listener to each button
-    pageButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        // Get the page number from the data-page attribute
-        const pageNumber = button.dataset.page;
+    // // Add a click event listener to each button
+    // pageButtons.forEach(button => {
+    //   button.addEventListener('click', () => {
+    //     // Get the page number from the data-page attribute
+    //     const pageNumber = button.dataset.page;
         
-        // Hide all pages except the one with the selected page number
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(page => {
-          if (page.id === 'page-' + pageNumber) {
-            page.style.display = 'grid';
-          } else {
-            page.style.display = 'none';
-          }
-        });
-      });
-    });
+    //     // Hide all pages except the one with the selected page number
+    //     const pages = document.querySelectorAll('.page');
+    //     pages.forEach(page => {
+    //       if (page.id === 'page-' + pageNumber) {
+    //         page.style.display = 'grid';
+    //       } else {
+    //         page.style.display = 'none';
+    //       }
+    //     });
+    //   });
+    // });
       
 
 
