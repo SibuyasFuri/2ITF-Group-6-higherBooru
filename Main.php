@@ -151,22 +151,22 @@
       }
       
       /* Style the pagination buttons */
-      .pagination {
+      .page-navigation {
         display: flex;
         justify-content: center;
         margin-top: 20px;
       }
-      .pagination button {
+      .page-navigation button {
         margin: 0 5px;
         padding: 5px 10px;
         border: none;
         background-color: #eee;
         cursor: pointer;
       }
-      .pagination button:hover {
+      .page-navigation button:hover {
         background-color: #ccc;
       }
-      .pagination button.active {
+      .page-navigation button.active {
         background-color: #ddd;
       }
       
@@ -242,12 +242,35 @@ for ($i = 0; $i < count($images); $i++) {
   }
 }
 
-// Output links to navigate between pages
+// Output the closing tag for the grid container div
+echo '</div>';
+
+// Add a new div for the page navigation links
+echo '<div class="page-navigation">';
+
+// Link to first page
 if ($page > 1) {
-  echo '<a href="?page=' . ($page - 1) . '">Previous page</a>';
+  echo '<a href="?page=1">&laquo;</a>';
+} else {
+  echo '<span class="disabled">&laquo;</span>';
 }
 
-for ($p = 1; $p <= $total_pages; $p++) {
+// Link to previous page
+if ($page > 1) {
+  echo '<a href="?page=' . ($page - 1) . '">&lsaquo;</a>';
+} else {
+  echo '<span class="disabled">&lsaquo;</span>';
+}
+
+// Output links to individual pages
+$start = max(1, $page - 5);
+$end = min($total_pages, $page + 5);
+
+if ($start > 1) {
+  echo '<span class="ellipsis">&hellip;</span>';
+}
+
+for ($p = $start; $p <= $end; $p++) {
   if ($p == $page) {
     echo '<span class="current-page">' . $page . '</span>';
   } else {
@@ -255,21 +278,27 @@ for ($p = 1; $p <= $total_pages; $p++) {
   }
 }
 
-if ($page < $total_pages) {
-  echo '<a href="?page=' . ($page + 1) . '">Next page</a>';
+if ($end < $total_pages) {
+  echo '<span class="ellipsis">&hellip;</span>';
 }
 
-?>
+// Link to next page
+if ($page < $total_pages) {
+  echo '<a href="?page=' . ($page + 1) . '">&rsaquo;</a>';
+} else {
+  echo '<span class="disabled">&rsaquo;</span>';
+}
 
-  <!-- Navigation buttons for switching between pages -->
-   <div class="navigation">
-     <?php
-      //  // Output a button for each page
-      //  for ($page = 1; $page <= $total_pages; $page++) {
-      //    echo '<button class="page-button" data-page="' . $page . '">' . $page  . '</button>';
-      //  }
-     ?>
-   </div>
+// Link to last page
+if ($page < $total_pages) {
+  echo '<a href="?page=' . $total_pages . '">&raquo;</a>';
+} else {
+  echo '<span class="disabled">&raquo;</span>';
+}
+
+echo '</div>';
+
+?>
 
   <script>
 
