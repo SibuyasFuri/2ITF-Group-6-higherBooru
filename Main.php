@@ -242,6 +242,16 @@
         </section>
       </main>
     </div>
+    
+    <!-- Sorting buttons -->
+    <form method="get">
+    <label>Sort by:</label>
+    <button type="submit" name="sort" value="latest">Latest</button>
+    <button type="submit" name="sort" value="oldest">Oldest</button>
+    <button type="submit" name="sort" value="az">A-Z</button>
+    <button type="submit" name="sort" value="za">Z-A</button>
+    </form>
+
     <div class="grid" id="image-grid">
     <?php
 
@@ -249,10 +259,51 @@
       $num_columns = 4;
       $images = glob("images/*.{jpg,jpeg,png,gif}", GLOB_BRACE);
 
-      // Sort the images by date created
-      usort($images, function($a, $b) {
-        return filemtime($b) - filemtime($a);
-      });
+// Sort by latest
+function sortLatest($a, $b) {
+  return filemtime($b) - filemtime($a);
+}
+
+// Sort by oldest
+function sortOldest($a, $b) {
+  return filemtime($a) - filemtime($b);
+}
+
+// Sort by A-Z
+function sortAZ($a, $b) {
+  return strcmp($a, $b);
+}
+
+// Sort by Z-A
+function sortZA($a, $b) {
+  return strcmp($b, $a);
+}
+
+// Default sort is by latest modification time
+usort($images, 'sortLatest');
+
+// Check if the user has selected a different sort order
+if (isset($_GET['sort'])) {
+  $sort = $_GET['sort'];
+  switch ($sort) {
+      case 'latest':
+          usort($images, 'sortLatest');
+          break;
+      case 'oldest':
+          usort($images, 'sortOldest');
+          break;
+      case 'az':
+          usort($images, 'sortAZ');
+          break;
+      case 'za':
+          usort($images, 'sortZA');
+          break;
+      default:
+          // Invalid sort option, fall back to default sort
+          usort($images, 'sortLatest');
+          break;
+  }
+}
 
       // Calculate the total number of pages
       $total_pages = ceil(count($images) / $limit);
