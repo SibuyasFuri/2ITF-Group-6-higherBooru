@@ -130,6 +130,7 @@
       
       /* Style the images */
       .image-container img {
+        margin-top: 2rem; /* adjust this to add more space for the artist name */
         position: absolute;
         top: 0px;
         left: 0px;
@@ -138,9 +139,16 @@
         object-fit: cover;
       }
 
+      /* Style the artist names */
+      .image-container .artist-name-container {
+        padding-left: 5px;
+        cursor: pointer;
+      }
+
+      /* NOT USED
       .image-info {
         padding-bottom: 2rem;
-      }
+      } */
       
       /* Hide all pages except the first one */
       .page {
@@ -150,26 +158,64 @@
         display: grid;
       }
       
-      /* Style the pagination buttons */
+      /* Style the pagination numbers */
       .page-navigation {
         display: flex;
         justify-content: center;
-        margin-top: 20px;
+        padding-top: 4rem;
+        padding-bottom: 8rem;
+        color: black;
       }
-      .page-navigation button {
+
+      /* Style the pagination buttons (ellipses only) */
+      .page-navigation span {
+        display: flex;
+        justify-content: center;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 20px;
         margin: 0 5px;
-        padding: 5px 10px;
         border: none;
+        width: 40px;
+        height: 40px;
+        background-color: #eee;
+      }
+
+      /* Style the pagination buttons (everything else) */
+      .page-navigation a {
+        display: flex;
+        justify-content: center;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 20px;
+        margin: 0 5px;
+        border: none;
+        width: 40px;
+        height: 40px;
         background-color: #eee;
         cursor: pointer;
       }
-      .page-navigation button:hover {
+      
+      /* pagination button ellipses only. NOT CSS NEEDED, THIS IS ALWAYS TO BE INACTIVE */
+      /* .page-navigation span:hover {
+        background-color: #ccc;
+      } */
+
+      /* pagination button ellipses only. NOT CSS NEEDED, THIS IS ALWAYS TO BE INACTIVE */
+      /* .page-navigation span.active {
+        background-color: #ddd;
+      } */
+
+      /* pagination button everything else */
+      .page-navigation a:hover {
         background-color: #ccc;
       }
-      .page-navigation button.active {
+
+      /* pagination button everything else */
+      .page-navigation a.active {
         background-color: #ddd;
       }
-      
+
     </style>
 </head>
   <body>
@@ -199,133 +245,122 @@
     <div class="grid" id="image-grid">
     <?php
 
-$limit = 20;
-$num_columns = 4;
-$images = glob("images/*.{jpg,jpeg,png,gif}", GLOB_BRACE);
+      $limit = 20;
+      $num_columns = 4;
+      $images = glob("images/*.{jpg,jpeg,png,gif}", GLOB_BRACE);
 
-// Sort the images by date created
-usort($images, function($a, $b) {
-  return filemtime($b) - filemtime($a);
-});
+      // Sort the images by date created
+      usort($images, function($a, $b) {
+        return filemtime($b) - filemtime($a);
+      });
 
-// Calculate the total number of pages
-$total_pages = ceil(count($images) / $limit);
+      // Calculate the total number of pages
+      $total_pages = ceil(count($images) / $limit);
 
-// Get the current page from the query string
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
+      // Get the current page from the query string
+      $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
-// Calculate the offset for the images
-$offset = ($page - 1) * $limit;
+      // Calculate the offset for the images
+      $offset = ($page - 1) * $limit;
 
-// Initialize the column index
-$column_index = 0;
+      // Initialize the column index
+      $column_index = 0;
 
-// Loop through the images and display them in the grid
-for ($i = 0; $i < count($images); $i++) {
-  // Skip images that are not within the current page
-  if ($i < $offset || $i >= $offset + $limit) {
-    continue;
-  }
+      // Loop through the images and display them in the grid
+      for ($i = 0; $i < count($images); $i++) {
+        // Skip images that are not within the current page
+        if ($i < $offset || $i >= $offset + $limit) {
+          continue;
+        }
 
-  // Get the image filename
-  $filename = $images[$i];
+        // Get the image filename
+        $filename = $images[$i];
   
-  // Image container
-  echo '<div class="image-container" style=grid-column: ' . ($column_index + 1) . ';">';
-  echo '<img src="' . $filename . '">';
-  echo '</div>';
+        // Image container
 
-  // Increment the column index and reset it if necessary
-  $column_index++;
-  if ($column_index >= $num_columns) {
-    $column_index = 0;
-  }
-}
+        echo '<div class="image-container" style=grid-column: ' . ($column_index + 1) . ';">';
+        echo '<div class="artist-name-container">';
+        echo 'add artist page link here'; // !!! important !!! //
+        echo '</div>';
+        echo '<img src="' . $filename . '">';
+        echo '</div>';
 
-// Output the closing tag for the grid container div
-echo '</div>';
+        // Increment the column index and reset it if necessary
+        $column_index++;
+        if ($column_index >= $num_columns) {
+          $column_index = 0;
+        }
+      }
 
-// Add a new div for the page navigation links
-echo '<div class="page-navigation">';
+      // Output the closing tag for the grid container div
+      echo '</div>';
 
-// Link to first page
-if ($page > 1) {
-  echo '<a href="?page=1">&laquo;</a>';
-} else {
-  echo '<span class="disabled">&laquo;</span>';
-}
+      // Add a new div for the page navigation links
+      echo '<div class="page-navigation">';
+      
+      // Link to first page
+      if ($page > 1) {
+        echo '<a href="?page=1">First</a>';
+      } else {
+        echo '<span class="disabled">First</span>';
+      }
+            
+      // Link to previous page
+      if ($page > 1) {
+        echo '<a href="?page=' . ($page - 1) . '">Prev</a>';
+      } else {
+        echo '<span class="disabled">Prev</span>';
+      }
 
-// Link to previous page
-if ($page > 1) {
-  echo '<a href="?page=' . ($page - 1) . '">&lsaquo;</a>';
-} else {
-  echo '<span class="disabled">&lsaquo;</span>';
-}
+      // Output links to individual pages
+      $start = 1;
+      $end = $total_pages;
 
-// Output links to individual pages
-$start = max(1, $page - 5);
-$end = min($total_pages, $page + 5);
+      if ($total_pages > 11) {
+        if ($page <= 5) {
+          $end = 11;
+        } elseif ($total_pages - $page <= 5) {
+          $start = $total_pages - 10;
+        } else {
+          $start = $page - 5;
+          $end = $page + 5;
+        }
+      }
 
-if ($start > 1) {
-  echo '<span class="ellipsis">&hellip;</span>';
-}
+      if ($start > 1) {
+        echo '<span class="ellipsis">&hellip;</span>';
+      }
 
-for ($p = $start; $p <= $end; $p++) {
-  if ($p == $page) {
-    echo '<span class="current-page">' . $page . '</span>';
-  } else {
-    echo '<a href="?page=' . $p . '">' . $p . '</a>';
-  }
-}
+      for ($p = $start; $p <= $end; $p++) {
+        if ($p == $page) {
+          echo '<span class="current-page">' . $page . '</span>';
+        } else {
+          echo '<a href="?page=' . $p . '">' . $p . '</a>';
+        }
+      }
 
-if ($end < $total_pages) {
-  echo '<span class="ellipsis">&hellip;</span>';
-}
+      if ($end < $total_pages) {
+        echo '<span class="ellipsis">&hellip;</span>';
+      }
 
-// Link to next page
-if ($page < $total_pages) {
-  echo '<a href="?page=' . ($page + 1) . '">&rsaquo;</a>';
-} else {
-  echo '<span class="disabled">&rsaquo;</span>';
-}
+      // Link to next page
+      if ($page < $total_pages) {
+        echo '<a href="?page=' . ($page + 1) . '">Next</a>';
+      } else {
+        echo '<span class="disabled">Next</span>';
+      }
 
-// Link to last page
-if ($page < $total_pages) {
-  echo '<a href="?page=' . $total_pages . '">&raquo;</a>';
-} else {
-  echo '<span class="disabled">&raquo;</span>';
-}
+      // Link to last page
+      if ($page < $total_pages) {
+        echo '<a href="?page=' . $total_pages . '">Last</a>';
+      } else {
+        echo '<span class="disabled">Last</span>';
+      }
 
-echo '</div>';
+      echo '</div>';
 
-?>
-
-  <script>
-
-    
-    // // Select all navigation buttons
-    // const pageButtons = document.querySelectorAll('.page-button');
-    
-    // // Add a click event listener to each button
-    // pageButtons.forEach(button => {
-    //   button.addEventListener('click', () => {
-    //     // Get the page number from the data-page attribute
-    //     const pageNumber = button.dataset.page;
-        
-    //     // Hide all pages except the one with the selected page number
-    //     const pages = document.querySelectorAll('.page');
-    //     pages.forEach(page => {
-    //       if (page.id === 'page-' + pageNumber) {
-    //         page.style.display = 'grid';
-    //       } else {
-    //         page.style.display = 'none';
-    //       }
-    //     });
-    //   });
-    // });
+      ?>
       
 
-
-    </script> 
   </body>
 </html>
