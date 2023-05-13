@@ -110,8 +110,13 @@
 
       }
 
-            /* Set up the grid layout */
-        .grid {
+      /* Style the sorting buttons */
+      .button-sort {
+
+      }
+
+      /* Set up the grid layout */
+      .grid {
         display: grid;
         grid-template-columns: repeat(4, 5fr);
         grid-gap: 10px;
@@ -244,6 +249,7 @@
     </div>
     
     <!-- Sorting buttons -->
+    <div class="button-sort" id="image-sort">
     <form method="get">
     <label>Sort by:</label>
     <button type="submit" name="sort" value="latest">Latest</button>
@@ -251,6 +257,7 @@
     <button type="submit" name="sort" value="az">A-Z</button>
     <button type="submit" name="sort" value="za">Z-A</button>
     </form>
+    </div>
 
     <div class="grid" id="image-grid">
     <?php
