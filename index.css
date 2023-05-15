@@ -123,7 +123,7 @@ h2.header-1 {
     justify-content: center;
     padding-top: 4rem;
     padding-bottom: 8rem;
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
@@ -139,6 +139,7 @@ h2.header-1 {
     width: 40px;
     height: 40px;
     align-items: center;
+    color: white;
 }
 
 /* Style the pagination buttons (everything else) */
@@ -167,6 +168,13 @@ h2.header-1 {
 /* pagination button everything else */
 .page-navigation a.active {
     background-color: #ddd;
+    align-items: center;
+}
+
+/* current page style */
+.page-navigation .current-page {
+    background-color: #ddd;
+    border-radius: 5px;
     align-items: center;
 }
       
