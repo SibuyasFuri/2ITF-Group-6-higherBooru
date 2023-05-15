@@ -75,11 +75,12 @@
     <!-- Sorting buttons -->
     <div class="button-sort" id="image-sort">
     <form method="get">
+    <?php $selectedSort = isset($_GET['sort']) ? $_GET['sort'] : 'latest'; ?>     <!-- Checks for which sorting method is selected -->
     <label>Sort by:</label>
-    <button type="submit" name="sort" value="latest">Latest</button>
-    <button type="submit" name="sort" value="oldest">Oldest</button>
-    <button type="submit" name="sort" value="az">A-Z</button>
-    <button type="submit" name="sort" value="za">Z-A</button>
+    <button type="submit" name="sort" value="latest"<?php if ($selectedSort === 'latest') echo ' class="active"'; ?>>Latest</button>
+    <button type="submit" name="sort" value="oldest"<?php if ($selectedSort === 'oldest') echo ' class="active"'; ?>>Oldest</button>
+    <button type="submit" name="sort" value="az"<?php if ($selectedSort === 'az') echo ' class="active"'; ?>>A-Z</button>
+    <button type="submit" name="sort" value="za"<?php if ($selectedSort === 'za') echo ' class="active"'; ?>>Z-A</button>
     </form>
     </div>
 

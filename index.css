@@ -64,7 +64,7 @@ h2.header-1 {
 .main {
     padding-left: 16rem;
     padding-right: 16rem;
-    padding-bottom: 4rem;
+    padding-bottom: 2rem;
     border-top: 1px solid rgba(255,255,255,0.5);
 }
 
@@ -116,7 +116,37 @@ h2.header-1 {
 .page:first-of-type {
     display: grid;
 }
-      
+
+.button-sort {
+    padding-left: 16rem;
+    padding-bottom: 2rem;
+}
+
+/* Style the sorting buttons */
+.button-sort button {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    outline: none;
+}
+
+  /* Style the active sorting button */
+.button-sort button.active {
+    background-color: #ddd;
+    color: white;
+}
+
+  /* Style the sorting buttons on hover */
+.button-sort button:hover {
+    background-color: #ccc;
+}
+
 /* Style the pagination numbers */
 .page-navigation {
     display: flex;
