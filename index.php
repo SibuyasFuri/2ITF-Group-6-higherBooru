@@ -5,48 +5,6 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="./index.css" rel="stylesheet" type="text/css"/>
-
-    <style>
-      
-      /* Style the pagination buttons (ellipses only) */
-.page-navigation span {
-    display: flex;
-    justify-content: center;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 20px;
-    margin: 0 5px;
-    border: none;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    color: white;
-}
-
-/* Style the pagination buttons (everything else) */
-.page-navigation a {
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-    padding-top: 5;
-    margin: 0 5px;
-    border: none;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-    align-items: center;
-}
-
-/* current page style */
-.page-navigation .current-page {
-    background-color: #ddd;
-    border-radius: 5px;
-    align-items: center;
-}
-
-    </style>
 </head>
   <body>
   <main class="main-container">
@@ -54,7 +12,7 @@
         <a class="active" href="#dashboard">Dashboard</a>
 
         <div class="topnav-right">
-          <a href="#login/register">Login/Register</a>
+          <a href="login.php">Login/Register</a>
           <a href="#upload">Upload</a>
         </div>
 </header>
@@ -75,12 +33,11 @@
     <!-- Sorting buttons -->
     <div class="button-sort" id="image-sort">
     <form method="get">
-    <?php $selectedSort = isset($_GET['sort']) ? $_GET['sort'] : 'latest'; ?>     <!-- Checks for which sorting method is selected -->
     <label>Sort by:</label>
-    <button type="submit" name="sort" value="latest"<?php if ($selectedSort === 'latest') echo ' class="active"'; ?>>Latest</button>
-    <button type="submit" name="sort" value="oldest"<?php if ($selectedSort === 'oldest') echo ' class="active"'; ?>>Oldest</button>
-    <button type="submit" name="sort" value="az"<?php if ($selectedSort === 'az') echo ' class="active"'; ?>>A-Z</button>
-    <button type="submit" name="sort" value="za"<?php if ($selectedSort === 'za') echo ' class="active"'; ?>>Z-A</button>
+    <button type="submit" name="sort" value="latest">Latest</button>
+    <button type="submit" name="sort" value="oldest">Oldest</button>
+    <button type="submit" name="sort" value="az">A-Z</button>
+    <button type="submit" name="sort" value="za">Z-A</button>
     </form>
     </div>
 
