@@ -5,8 +5,9 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <link href="gallery.css" rel="stylesheet">
     <script src="gallery.js"></script>
+    <!-- <script src="gallery (2).js"></script> -->
+
 
     <style>
       /* Add styles for the navigation bar */
@@ -138,6 +139,70 @@
         text-decoration: none;
       }
 
+
+      /* GALLERY CONTAINER */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 8px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* THUMBNAILS & CAPTION */
+      .gallery figure {
+        margin: 0;
+        background: transparent;
+      }
+      .gallery img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+      .gallery figcaption {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.0em;
+        text-align: center;
+        color: #fff;
+        padding: 5px 10px;
+      }
+
+      /* FULLSCREEN IMAGE */
+      .gallery img.full {
+        position: fixed;
+        top: 0; left: 0; z-index: 999;
+        width: 100%; height: 100%;
+        object-fit: contain;
+        background-color: rgba(16, 16, 22, 0.6);
+        cursor: pointer;
+        padding-left: 16rem;
+        padding-right: 16rem;
+      }
+      .gallery .caption-non-full {
+        display: block;
+      }
+      .gallery .caption-full {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 10%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px;
+        font-size: 16px;
+        z-index: 9999;
+      }
+      .gallery img.full + .caption-full {
+        display: block;
+      }
+
+      /* ANIMATION */
+      .gallery { overflow-x: hidden; }
+      .gallery img { transition: all 0.3s; }
+
+
     </style>
 </head>
   <body>
@@ -163,10 +228,8 @@
 
           <img src="Default_pfp.png" width="420" height="420"/><br><br><br>
 
-          <a href="https://www.google.com/">
-          <!-- Google.com here is a placeholder -->
           <h1>Artist Name</h1>
-          </a><br>
+          <br>
 
           <h5 style="color:gray;">
           UID: 75425647 <br> Account Created: DD/MM/YYYY
@@ -186,26 +249,30 @@
       </main>
     </div>
     
-    <div class="gallery"><?php
-      // GET IMAGES IN GALLERY FOLDER
-      $dir = __DIR__ . DIRECTORY_SEPARATOR . "gallery" . DIRECTORY_SEPARATOR;
-      $images = glob("$dir*.{jpg,jpeg,gif,png,bmp,webp}", GLOB_BRACE);
+    <div class="gallery">
+  <?php
+    // GET IMAGES IN GALLERY FOLDER
+    $dir = __DIR__ . DIRECTORY_SEPARATOR . "gallery" . DIRECTORY_SEPARATOR;
+    $images = glob("$dir*.{jpg,jpeg,gif,png,bmp,webp}", GLOB_BRACE);
 
-      // OUTPUT IMAGES
-      foreach ($images as $i) {
-        $img = basename($i);
-        $caption = substr($img, 0, strrpos($img, "."));
-        printf("<figure><img src='gallery/%s'><figcaption>
-        <center>
-
-        Artwork Title
-        
-        </center>
-        </figcaption></figure>", 
-          rawurlencode($img), $caption
-        );
-      }
-    ?></div>
+    // OUTPUT IMAGES
+    foreach ($images as $i) {
+      $img = basename($i);
+      $caption = substr($img, 0, strrpos($img, "."));
+      printf("<figure>
+                <img src='gallery/%s'>
+                <figcaption class='caption-non-full'>
+                  <center>%s</center>
+                </figcaption>
+                <figcaption class='caption-full'>
+                  <center>%s<br>Artist: Artist Name<br>Date Uploaded: DD/MM/YYYY</center>
+                </figcaption>
+              </figure>",
+        rawurlencode($img), $caption, $caption
+      );
+    }
+  ?>
+</div>
 
   </body>
 </html>
