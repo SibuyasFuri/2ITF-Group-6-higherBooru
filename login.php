@@ -19,11 +19,13 @@
         <input type = "text" class = "input-field" placeholder="User ID" name ="user_name" required>
         <input type = "password" class = "input-field" placeholder="Enter Password" name ="password" required>
         <button type= "submit" class = "submit-btn" name= "submit_login">Log In</button>
+        <button class = "back-btn" onclick="history.back()">Back</button>
     </form>
     <form id = "register" class = "input-group" method = "post">
         <input type = "text" class = "input-field" placeholder="User ID" name = "user_name" required>
         <input type = "password" class = "input-field" placeholder="Enter Password" name = "password" required>
         <button type= "submit" class = "submit-btn" name ="submit_registration">Register</button>
+        <button class = "back-btn" onclick="history.back()">Back</button>
     </form>
       </div>
 

@@ -94,7 +94,7 @@ input:focus {
 	border: 0;
 	outline: none;
 	border-radius: 30px;
-	margin-top: 30.5px;
+	margin-top: 50px;
 	transition-duration: .4s;
 }
 .submit-btn:hover {
@@ -108,8 +108,38 @@ input:focus {
 	border: 0;
 	outline: none;
 	border-radius: 30px;
-	margin-top: 30.5px;
-	box-shadow: 0 0 25px 0.5	px #8A8A8D;
+	margin-top: 50px;
+	box-shadow: 0 0 25px 0.5px #8A8A8D;
+	transition-timing-function: ease-in-out;
+}
+.back-btn {
+	width: 85%;
+	height: 5%;
+	padding: 10px 30px;
+	cursor: pointer;
+	display: block;
+	margin: auto;
+	background: #4F4F54;
+	color: white;
+	border: 0;
+	outline: none;
+	border-radius: 30px;
+	margin-top: 20px;
+	transition-duration: .4s;
+}
+.back-btn:hover {
+	width: 85%;
+	height: 5%;
+	padding: 10px 30px;
+	cursor: pointer;
+	display: block;
+	margin: auto;
+	background: #4F4F54;
+	border: 0;
+	outline: none;
+	border-radius: 30px;
+	margin-top: 20px;
+	box-shadow: 0 0 25px 0.5px #8A8A8D;
 	transition-timing-function: ease-in-out;
 }
 #login{
