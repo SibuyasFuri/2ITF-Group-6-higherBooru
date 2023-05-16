@@ -6,6 +6,7 @@ include("functions.php");
 ?>
 <!DOCTYPE html>
 <html>
+  
   <head>
     <title>HigherBooru</title>
     
@@ -229,11 +230,16 @@ include("functions.php");
 
     </style>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="./index.css" rel="stylesheet" type="text/css"/>
+</head>
   <body>
-   
+  <main class="main-container">
+  <header class="topnav topnav-left">
+        <a class="active" href="#dashboard">Dashboard</a>
 
-    <div class="navbar">
-    <?php
+        <div class="topnav-right">
+        <?php
 
 if(isset($_SESSION['user_id'])){
   echo '<a href="logout.php?">Logout</a>';
@@ -241,20 +247,14 @@ if(isset($_SESSION['user_id'])){
 }elseif(empty($_SESSION['user_id'])){
   echo '<a href="login.php?">Login</a>';
 }
-?>
-      
-      <div class="dropdown">
-        <button class="dropbtn">Menu &#9660;</button>
-        <div class="dropdown-content">
-          <a href="Main.php">Home</a>
-          
-          <a href="Works.php">Works</a>
-          <a href="About.php">About</a>
 
-       
+?>
         </div>
-      </div> 
-    </div>
+</header>
+  
+   
+
+    
  
   
     <header class="banner">
@@ -360,7 +360,8 @@ if (isset($_GET['sort'])) {
 
         echo '<div class="image-container" style=grid-column: ' . ($column_index + 1) . ';">';
         echo '<div class="artist-name-container">';
-        echo 'add artist page link here'; // !!! important !!! //
+       echo 'artist name';
+ // !!! important !!! //
         echo '</div>';
         echo '<img src="' . $filename . '">';
         echo '</div>';

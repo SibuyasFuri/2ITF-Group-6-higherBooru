@@ -40,59 +40,82 @@ echo "Wrong Username or Password";
         echo "Please Input Valid Data";
     }
 }
-//}
+//
 ?>
 
-<html>
-    <head>
-        <title>Login</title>
-    </head>
-    <body>
-        <br><br><a href = "Main.php">Go Back to Home</a>
-    <div id="box">
-		
-		<form method="post">
-			<div style="font-size: 20px;margin: 10px;color: white;">Login</div>
+<?php
+//signup area
 
-			<input id="text" type="text" name="user_name"><br><br>
-			<input id="text" type="password" name="password"><br><br>
 
-			<input id="button" type="submit" value="Login"><br><br>
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+    //something was posted
 
-			<a href="signup.php">Click to Signup</a><br><br>
-		</form>
-	</div>
-</form>
+   $user_name = $_POST['user_name'];
+    $password =$_POST['password'];
+
+    if(!empty($user_name) && !empty($password)){
+
+//saving to database
+
+$user_id = rand(0,999);
+
+$query = "insert into users (user_id,user_name,password) values ('$user_id','$user_name','$password')";
+mysqli_query($conn,$query);
+header("Location: login.php");
+die;
+    }
+	else {
+        echo "Please Input Valid Data";
+    }
+}
+?>
+
+<html lang="en">
+<head>
+	<h4> <br><br><a href = "Main.php">Go Back to Home</a></h4>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="./login.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+      <div class="form-box">
+        <div class ="button-box">
+            <div id = "btn"> </div>
+            <button type = "button" class = "toggle-btn" onclick = "login()">Log In</button>
+            <button type = "button" class = "toggle-btn" onclick = "register()">Register</button>
         </div>
-    </body>
-    <style type="text/css">
-	
-	#text{
 
-		height: 25px;
-		border-radius: 5px;
-		padding: 4px;
-		border: solid thin #aaa;
-		width: 100%;
-	}
+    <h1>higherBooru</h1>
+    <form id = "login" class = "input-group" method ="post">
+        <input type = "text" class = "input-field" placeholder="User ID" name ="user_name" required>
+        <input type = "password" class = "input-field" placeholder="Enter Password" name ="password" required>
+        <button type= "submit" class = "submit-btn" name= "submit_login" value = "Login">Log In</button>
+    </form>
+    <form id = "register" class = "input-group" method = "post">
+        <input type = "text" class = "input-field" placeholder="User ID" name = "user_name" required>
+        <input type = "password" class = "input-field" placeholder="Enter Password" name = "password" required>
+        <button type= "submit" class = "submit-btn" name ="submit_registration" value ="Signup">Register</button>
+    </form>
+      </div>
 
-	#button{
+        <script>
+        var x = document.getElementById('login');
+        var y = document.getElementById('register');
+        var z = document.getElementById('btn');
 
-		padding: 10px;
-		width: 100px;
-		color: white;
-		background-color: lightblue;
-		border: none;
-	}
-
-	#box{
-
-		background-color: grey;
-		margin: auto;
-		width: 300px;
-		padding: 20px;
-	}
-
-	</style>
-
+        function register(){
+          x.style.left = "-400px";
+          y.style.left = "50px";
+          z.style.left = "110px";
+        }
+        function login(){
+          x.style.left = "50px";
+          y.style.left = "450px";
+          z.style.left = "0";
+        }
+        
+        </script>
+	</body>
 </html>
