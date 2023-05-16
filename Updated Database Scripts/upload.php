@@ -1,4 +1,9 @@
 <?php
+session_start();
+include("db_conn.php");
+include("functions.php");
+
+
 if (isset($_POST['submit']) && isset($_FILES['my_image'])){
     include "db_conn.php";
 echo "<pre>";
@@ -26,7 +31,7 @@ $img_upload_path = 'images/'.$new_img_name;
 move_uploaded_file($tmp_name, $img_upload_path);
 // insert into database ^
 
-$sql = "INSERT INTO images(image_url) VALUES('$new_img_name')";
+$sql = "INSERT INTO users(image_url) VALUES('$new_img_name')";
 mysqli_query($conn, $sql);
 header("Location: Main.php");
         }else {

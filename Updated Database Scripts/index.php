@@ -1,8 +1,10 @@
 <?php session_start(); 
 include("functions.php");
 include("db_conn.php");
+
 $user_data = check_login($conn);
-echo '<script>alert("You need to login in order to post any images")</script>';
+
+
 ?>
 <html>
 <head>
@@ -21,9 +23,11 @@ Image Upload PHP
 
 </head>
 <body>
+	
 	<?php if (isset($_GET['error'])): ?>
 		<p><?php echo $_GET['error']; ?></p>
 <?php endif ?>
+<a href = "Main.php">Go Back to Home</a>
    <form action="upload.php" method="post" enctype="multipart/form-data">
 <input type = "file"
 name = "my_image">

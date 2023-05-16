@@ -3,6 +3,10 @@ session_start();
 include("db_conn.php");
 include("functions.php");
 
+///if(isset($_SESSION['user_id']))
+//{
+	//header("Location:Main.php?success=1'");
+//} else {
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     //something was posted
 
@@ -29,13 +33,14 @@ if($result){
 
     }
 }
+
 echo "Wrong Username or Password";
     }
     else {
         echo "Please Input Valid Data";
     }
 }
-
+//}
 ?>
 
 <html>
