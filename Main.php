@@ -17,8 +17,10 @@ include("functions.php");
 </head>
   <body>
   <main class="main-container">
-  <header class="topnav topnav-left">
-        <a class="active" href="#dashboard">Dashboard</a>
+  <header class="topnav">
+        <div class="topnav-left">
+        <a href="Main.php">higherBooru</a>
+</div>
 
         <div class="topnav-right">
         <?php
@@ -33,11 +35,6 @@ include("functions.php");
 ?>
         </div>
 </header>
-    
-    <header class="banner">
-      <div class="header">
-        <h1 class="Title">higherBooru</h1>
-    </header>
 
     <div class="main" id="page-content">
       <main class="main-1">
@@ -171,16 +168,16 @@ if (isset($_GET['sort'])) {
       
       // Link to first page
       if ($page > 1) {
-        echo '<a href="?page=1">First</a>';
+        echo '<a href="?page=1">&laquo;</a>';
       } else {
-        echo '<span class="disabled">First</span>';
+        echo '<span class="disabled">&laquo;</span>';
       }
             
       // Link to previous page
       if ($page > 1) {
-        echo '<a href="?page=' . ($page - 1) . '">Prev</a>';
+        echo '<a href="?page=' . ($page - 1) . '">&#8249;</a>';
       } else {
-        echo '<span class="disabled">Prev</span>';
+        echo '<span class="disabled">&#8249;</span>';
       }
 
       // Output links to individual pages
@@ -216,16 +213,16 @@ if (isset($_GET['sort'])) {
 
       // Link to next page
       if ($page < $total_pages) {
-        echo '<a href="?page=' . ($page + 1) . '">Next</a>';
+        echo '<a href="?page=' . ($page + 1) . '">&#8250;</a>';
       } else {
-        echo '<span class="disabled">Next</span>';
+        echo '<span class="disabled">&#8250;</span>';
       }
 
       // Link to last page
       if ($page < $total_pages) {
-        echo '<a href="?page=' . $total_pages . '">Last</a>';
+        echo '<a href="?page=' . $total_pages . '">&raquo;</a>';
       } else {
-        echo '<span class="disabled">Last</span>';
+        echo '<span class="disabled">&raquo;</span>';
       }
 
       echo '</div>';

@@ -93,7 +93,6 @@ die;
 
 <html lang="en">
 <head>
-	<h4> <br><br><a href = "Main.php">Go Back to Home</a></h4>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -113,11 +112,13 @@ die;
         <input type = "text" class = "input-field" placeholder="User ID" name ="user_name" required>
         <input type = "password" class = "input-field" placeholder="Enter Password" name ="password" required>
         <button type= "submit" class = "submit-btn" name= "submit_login" value = "Login">Log In</button>
+        <button class = "back-btn" onclick="history.back()">Back</button>
     </form>
     <form id = "register" class = "input-group" method = "post">
         <input type = "text" class = "input-field" placeholder="User ID" name = "user_name" required>
         <input type = "password" class = "input-field" placeholder="Enter Password" name = "password" required>
         <button type= "submit" class = "submit-btn" name ="submit_registration" value ="Signup">Register</button>
+        <button class = "back-btn" onclick="history.back()">Back</button>
     </form>
       </div>
 

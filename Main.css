@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Quicksand&display=swap');
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'DM Sans', sans-serif;
     background-color: #14141b;
     color: white;
 }
@@ -9,27 +11,28 @@ body {
     height: 100%;
 }
 .topnav {
-    margin-top: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
     overflow: hidden;
-    border-radius: 18px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(244, 244, 248, 0.05), rgba(0, 0, 0, 0.1));
-    backdrop-filter: blur(2px);
+    background-color: rgba(49, 49, 56, 0.5);
+    backdrop-filter: blur(3px);
     position: sticky;
-    top: 5px;
+    top: 0px;
     z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 .topnav-right {
     float: right;
-    margin-right: 5px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.topnav-left {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 30px;
 }
 .topnav a {
     float: left;
     margin-left: 5px;
     color: #f2f2f2;
     text-align: center;
-    font-size: 17px;
     padding: 14px 16px;
     text-decoration: none;
     transition-duration: 0.3s;
@@ -40,26 +43,14 @@ body {
     transition-timing-function: ease-in-out;
 }
   
-.topnav a.active {
-    font-weight: bold;
-}
-.banner {
-    padding-top: 12rem;
-    padding-left: 16rem;
-    padding-right: 16rem;;
-}
-h1.Title {
-    padding-bottom: 10px;
-}
 h2.header-1 {
-    padding-top: 10px;
+    padding-top: 5px;
 }
 .main {
     padding-left: 16rem;
     padding-right: 16rem;
-    padding-bottom: 4rem;
     padding-bottom: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.5);
+    padding-top: 1.5rem;
 }
 
 /* Set up the grid layout */
@@ -111,7 +102,7 @@ h2.header-1 {
 
 .button-sort {
     padding-left: 16rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 }
 
 /* Style the sorting buttons */
@@ -126,17 +117,20 @@ h2.header-1 {
     color: white;
     background-color: transparent;
     outline: none;
+    transition-duration: .4s;
 }
 
   /* Style the active sorting button */
 .button-sort button.active {
-    background-color: #ddd;
+    background-color: #4F4F54;
     color: white;
+    transition-duration: .4s;
 }
 
   /* Style the sorting buttons on hover */
 .button-sort button:hover {
-    background-color: #ccc;
+    color: #A7A7AA;
+    transition-timing-function: ease-in-out;
 }
 
 /* Style the pagination numbers */
@@ -176,12 +170,14 @@ h2.header-1 {
     text-decoration: none;
     color: white;
     align-items: center;
+    transition-duration: 0.3s;
 }
 /* pagination button everything else */
 .page-navigation a:hover {
-    background-color: #ccc;
+    color: #A7A7AA;
     border-radius: 5px;
     align-items: center;
+    transition-timing-function: ease-in-out;
 }
 /* pagination button everything else */
 .page-navigation a.active {
@@ -190,7 +186,7 @@ h2.header-1 {
 }
 /* current page style */
 .page-navigation .current-page {
-    background-color: #ddd;
+    background-color: #4F4F54;
     border-radius: 5px;
     align-items: center;
 }

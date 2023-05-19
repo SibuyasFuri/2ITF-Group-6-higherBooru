@@ -3,25 +3,26 @@ session_start();
 include("db_conn.php");
 include("functions.php");
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-    //something was posted
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    // Something was posted
+	
+    $user_name = $_POST['user_name'];
+    $password = $_POST['password'];
 
-   $user_name = $_POST['user_name'];
-    $password =$_POST['password'];
+    if (!empty($user_name) && !empty($password)) {
 
-    if(!empty($user_name) && !empty($password)){
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-//saving to database
+        // Save the hashed password to the database
+        $user_id = rand(0, 999);
+        $query = "INSERT INTO users (user_id, user_name, password) VALUES ('$user_id', '$user_name', '$hashed_password')";
+        mysqli_query($conn, $query);
 
-$user_id = rand(0,999);
-
-$query = "insert into users (user_id,user_name,password) values ('$user_id','$user_name','$password')";
-mysqli_query($conn,$query);
-header("Location: login.php");
-die;
-    }
-	else {
-        echo "Please Input Valid Data";
+        header("Location: login.php");
+        die;
+    } else {
+        echo "Please input valid data";
     }
 }
 ?>
@@ -59,21 +60,18 @@ die;
 	}
 
 	</style>
-    <body>
+<body>
     <div id="box">
-		
-		<form method="post">
-			<div style="font-size: 20px;margin: 10px;color: white;">Signup</div>
+        <form method="post">
+            <div style="font-size: 20px;margin: 10px;color: white;">Signup</div>
 
-			<input id="text" type="text" name="user_name"><br><br>
-			<input id="text" type="password" name="password"><br><br>
+            <input id="text" type="text" name="user_name"><br><br>
+            <input id="text" type="password" name="password"><br><br>
 
-			<input id="button" type="submit" value="Signup"><br><br>
+            <input id="button" type="submit" value="Signup"><br><br>
 
-			<a href="login.php">Click to Login</a><br><br>
-		</form>
-	</div>
-    </body>
-   
-
+            <a href="login.php">Click to Login</a><br><br>
+        </form>
+    </div>
+</body>
 </html>
