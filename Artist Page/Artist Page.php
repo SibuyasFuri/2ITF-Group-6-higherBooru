@@ -83,7 +83,6 @@
     }
     ?>
     </div>
-    <div class="image-popup"></div>
 
   </body>
 </html>
