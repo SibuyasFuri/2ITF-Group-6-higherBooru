@@ -242,6 +242,7 @@ include("functions.php");
         <?php
 
 if(isset($_SESSION['user_id'])){
+
   echo '<a href="logout.php?">Logout</a>';
   echo '<a href="upload.php" value="upload_button">Upload</a>';
 }elseif(empty($_SESSION['user_id'])){

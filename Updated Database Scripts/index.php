@@ -4,7 +4,10 @@ include("db_conn.php");
 
 $user_data = check_login($conn);
 
-
+if(isset($_POST["submit"])){
+	
+	mysqli_query($conn, $query);
+}
 ?>
 <html>
 <head>
@@ -31,7 +34,23 @@ Image Upload PHP
    <form action="upload.php" method="post" enctype="multipart/form-data">
 <input type = "file"
 name = "my_image">
+ 
+   <style>
+    label{
+        display: block;
+    }
+   </style>
+   <body>
+    <form action="includes/upload.php" method ="POST"><label for="">Title</label>
+<input type="text" name="title" required></input>
+<label for="">#Tags</label>
+<input type="checkbox" name="tags[]" value="Girl">#Girl
+<input type="checkbox" name="tags[]" value="Kawaii">#Kawaii
+<input type="checkbox" name="tags[]" value="cute">#cute
+<input type="checkbox" name="tags[]" value="blackmen">#blackmen
+<input type="checkbox" name="tags[]" value="sexymen">#sexymen <br>
 <input type="submit" name="submit" value = "Upload">
+
 
    </form> 
 </body>

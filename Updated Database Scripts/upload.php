@@ -31,7 +31,15 @@ $img_upload_path = 'images/'.$new_img_name;
 move_uploaded_file($tmp_name, $img_upload_path);
 // insert into database ^
 
-$sql = "INSERT INTO users(image_url) VALUES('$new_img_name')";
+$title = $_POST["title"];
+$tags = $_POST['tags'];
+$tag = "";
+foreach($tags as $row){
+    $tag .= $row . ",";
+}
+	
+$sql = "INSERT INTO images(name,image_url,tags) VALUES('$title','$new_img_name','$tag')";
+
 mysqli_query($conn, $sql);
 header("Location: Main.php");
         }else {
@@ -47,4 +55,6 @@ header("Location: Main.php");
 }else {
     header("Location: index.php");
 }
+?>
+
 
