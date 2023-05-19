@@ -57,31 +57,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 //saving to database
 
-// saving to database
-$user_id = rand(0, 999);
-$query = "INSERT INTO users (user_id, user_name, password) VALUES ('$user_id', '$user_name', '$password')";
-mysqli_query($conn, $query);
+$user_id = rand(0,999);
 
-// Create the HTML page for the user
-$html = "<!DOCTYPE html>
-<html>
-<head>
-    <title>Test</title>
-</head>
-<body>
-    <h1>Welcome, $user_name!</h1>
-    <p>This is your personal page.</p>
-</body>
-</html>";
-
-//Defines the directory path for the created page
-$pageDirectory = 'artist/';
-
-// Save the HTML page with the user's username as the filename
-$filename = $pageDirectory . $user_name . ".php";
-file_put_contents($filename, $html);
-
-// Redirection
+$query = "insert into users (user_id,user_name,password) values ('$user_id','$user_name','$password')";
+mysqli_query($conn,$query);
 header("Location: login.php");
 die;
     }

@@ -134,12 +134,24 @@ if (isset($_GET['sort'])) {
 
         // Get the image filename
         $filename = $images[$i];
-  
-        // Image container
 
-        echo '<div class="image-container" style=grid-column: ' . ($column_index + 1) . ';">';
+        // Get the artist's username based on the image's URL
+        $query = "SELECT users.user_name FROM images JOIN users ON images.user_id = users.user_id WHERE images.image_url = '" . basename($filename) . "'";
+        $result = mysqli_query($conn, $query);
+        $artistName = '';
+        if ($result && mysqli_num_rows($result) > 0) {
+          $row = mysqli_fetch_assoc($result);
+          $artistName = $row['user_name'];
+        }
+
+        // Image container
+        echo '<div class="image-container" style="grid-column: ' . ($column_index + 1) . ';">';
         echo '<div class="artist-name-container">';
-        echo 'add artist page link here'; // !!! important !!! //
+        if (!empty($artistName)) {
+          echo '<a href="artist/' . $artistName . '.php">' . $artistName . '</a>';
+        } else {
+          echo $artistName; // Display the artist's name without a link
+        }
         echo '</div>';
         echo '<img src="' . $filename . '">';
         echo '</div>';
