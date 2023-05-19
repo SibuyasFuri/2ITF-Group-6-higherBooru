@@ -8,7 +8,6 @@ body {
 .main-container {
     height: 100%;
 }
-
 .topnav {
     margin-top: 5px;
     margin-left: 5px;
@@ -21,12 +20,10 @@ body {
     top: 5px;
     z-index: 100;
 }
-
 .topnav-right {
     float: right;
     margin-right: 5px;
 }
-
 .topnav a {
     float: left;
     margin-left: 5px;
@@ -46,25 +43,22 @@ body {
 .topnav a.active {
     font-weight: bold;
 }
-
 .banner {
     padding-top: 12rem;
     padding-left: 16rem;
     padding-right: 16rem;;
 }
-
 h1.Title {
     padding-bottom: 10px;
 }
-
 h2.header-1 {
     padding-top: 10px;
 }
-
 .main {
     padding-left: 16rem;
     padding-right: 16rem;
     padding-bottom: 4rem;
+    padding-bottom: 2rem;
     border-top: 1px solid rgba(255,255,255,0.5);
 }
 
@@ -96,13 +90,11 @@ h2.header-1 {
     height: 100%;
     object-fit: cover;
 }
-
 /* Style the artist names */
 .image-container .artist-name-container {
     padding-left: 5px;
     cursor: pointer;
 }
-
 /* NOT USED
 .image-info {
     padding-bottom: 2rem;
@@ -112,21 +104,50 @@ h2.header-1 {
 .page {
     display: none;
 }
-
 .page:first-of-type {
     display: grid;
 }
-      
+
+
+.button-sort {
+    padding-left: 16rem;
+    padding-bottom: 2rem;
+}
+
+/* Style the sorting buttons */
+.button-sort button {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    outline: none;
+}
+
+  /* Style the active sorting button */
+.button-sort button.active {
+    background-color: #ddd;
+    color: white;
+}
+
+  /* Style the sorting buttons on hover */
+.button-sort button:hover {
+    background-color: #ccc;
+}
+
 /* Style the pagination numbers */
 .page-navigation {
     display: flex;
     justify-content: center;
     padding-top: 4rem;
     padding-bottom: 8rem;
-    color: black;
+    color: white;
     text-decoration: none;
 }
-
 /* Style the pagination buttons (ellipses only) */
 .page-navigation span {
     display: flex;
@@ -139,8 +160,8 @@ h2.header-1 {
     width: 40px;
     height: 40px;
     align-items: center;
+    color: white;
 }
-
 /* Style the pagination buttons (everything else) */
 .page-navigation a {
     display: flex;
@@ -156,17 +177,21 @@ h2.header-1 {
     color: white;
     align-items: center;
 }
-
 /* pagination button everything else */
 .page-navigation a:hover {
     background-color: #ccc;
     border-radius: 5px;
     align-items: center;
 }
-
 /* pagination button everything else */
 .page-navigation a.active {
     background-color: #ddd;
+    align-items: center;
+}
+/* current page style */
+.page-navigation .current-page {
+    background-color: #ddd;
+    border-radius: 5px;
     align-items: center;
 }
       
@@ -174,7 +199,6 @@ h2.header-1 {
 /*.page-navigation span:hover {
     background-color: #ccc;
 } */
-
 /* pagination button ellipses only. NOT CSS NEEDED, THIS IS ALWAYS TO BE INACTIVE */
 /*.page-navigation span.active {
     background-color: #ddd;
