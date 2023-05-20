@@ -274,7 +274,7 @@
     <div class="gallery">
     <?php
     // Get Images in Gallery Folder
-    $dir = __DIR__ . DIRECTORY_SEPARATOR . "images" . DIRECTORY_SEPARATOR;
+    $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . "images" . DIRECTORY_SEPARATOR;
     $images = glob("$dir*.{jpg,jpeg,gif,png,bmp,webp}", GLOB_BRACE);
 
     // Output Images
