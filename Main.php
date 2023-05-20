@@ -156,7 +156,7 @@ if (isset($_GET['sort'])) {
 }
 
       // Calculate the total number of pages
-      $total_pages = ceil(($numResults > 0 ? $numResults : count($images)) / $limit);
+      $total_pages = ceil(count($images) / $limit);
 
       // Get the current page from the query string
       $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -231,7 +231,7 @@ if (isset($_GET['sort'])) {
       // Output links to individual pages
       $start = 1;
       $end = $total_pages;
-
+      
       if ($total_pages > 11) {
         if ($page <= 5) {
           $end = 11;
@@ -280,3 +280,4 @@ if (isset($_GET['sort'])) {
 
   </body>
 </html>
+
