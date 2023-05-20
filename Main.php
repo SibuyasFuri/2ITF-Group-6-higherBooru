@@ -4,6 +4,22 @@ session_start();
 include("db_conn.php");
 include("functions.php");
 
+// Get the search query
+$searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Modify the SQL query to include the search condition
+if (!empty($searchQuery)) {
+  $query = "SELECT images.name, images.image_url, users.user_name FROM images JOIN users ON images.user_id = users.user_id WHERE users.user_name LIKE '%$searchQuery%' OR images.name LIKE '%$searchQuery%' OR images.tags LIKE '%$searchQuery%'";
+} else {
+  $query = "SELECT images.name, images.image_url, users.user_name FROM images JOIN users ON images.user_id = users.user_id";
+}
+
+// Execute the query
+$result = mysqli_query($conn, $query);
+
+// Get the number of search results
+$numResults = mysqli_num_rows($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +59,19 @@ include("functions.php");
         </section>
       </main>
     </div>
+
+    <!-- Search bar -->
+    <div class="search-bar">
+      <form method="get">
+        <input type="text" name="search" placeholder="Search" value="<?php echo $searchQuery; ?>">
+        <button type="submit">Search</button>
+      </form>
+      <?php
+      if (!empty($searchQuery)) {
+        echo '<p>Showing ' . $numResults . ' results for "' . $searchQuery . '"</p>';
+      }
+      ?>
+    </div>
     
     <!-- Sorting buttons -->
     <div class="button-sort" id="image-sort">
@@ -59,7 +88,23 @@ include("functions.php");
     <div class="grid" id="image-grid">
       
     <?php
+    // Fetch the search results
+      if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+          $artistName = $row['user_name'];
+          $imageName = $row['image_url'];
 
+          echo '<div class="image-container">';
+          echo '<div class="artist-name-container">';
+          echo '<a href="artist/' . $artistName . '.php">' . $artistName . '</a>';
+          echo '</div>';
+          echo '<img src="images/' . $imageName . '">';
+          echo '</div>';
+        }
+      } else {
+        echo '<p>No results found.</p>';
+      }
+    
       $limit = 20;
       $num_columns = 4;
       $images = glob("images/*.{jpg,jpeg,png,gif}", GLOB_BRACE);
@@ -111,7 +156,7 @@ if (isset($_GET['sort'])) {
 }
 
       // Calculate the total number of pages
-      $total_pages = ceil(count($images) / $limit);
+      $total_pages = ceil(($numResults > 0 ? $numResults : count($images)) / $limit);
 
       // Get the current page from the query string
       $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -124,8 +169,11 @@ if (isset($_GET['sort'])) {
 
       // Loop through the images and display them in the grid
       for ($i = 0; $i < count($images); $i++) {
-        // Skip images that are not within the current page
-        if ($i < $offset || $i >= $offset + $limit) {
+        // Get the image filename
+        $filename = $images[$i];
+        
+        // Skip images that are not within the current page or do not match the search query (if provided)
+        if ($i < $offset || $i >= $offset + $limit || (!empty($searchQuery) && !strstr($filename, $searchQuery))) {
           continue;
         }
 
