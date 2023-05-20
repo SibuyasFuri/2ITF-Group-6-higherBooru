@@ -57,14 +57,11 @@ $numResults = mysqli_num_rows($result);
         <section class="gallery">
           <h2 class="header-1">Artworks</h2>
         </section>
-      </main>
-    </div>
-
-    <!-- Search bar -->
-    <div class="search-bar">
+        <!-- Search bar -->
+        <div class="search-bar">
       <form method="get">
-        <input type="text" name="search" placeholder="Search" value="<?php echo $searchQuery; ?>">
-        <button type="submit">Search</button>
+      <button class="search-btn" type="submit">Search</button>
+        <input type="text" class="search-input" name="search" value="<?php echo $searchQuery; ?>">
       </form>
       <?php
       if (!empty($searchQuery)) {
@@ -72,6 +69,9 @@ $numResults = mysqli_num_rows($result);
       }
       ?>
     </div>
+      </main>
+    </div>
+
     
     <!-- Sorting buttons -->
     <div class="button-sort" id="image-sort">
