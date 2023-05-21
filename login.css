@@ -8,13 +8,16 @@
 	}
 }
 body{
-	animation: appear 1s;
+	animation: appear 0.5s;
 	background-color: #313138;
 	color: white;
 }
 h1{
 	font-family: 'Quicksand', sans-serif;
 	text-align: center;
+}
+form {
+	font-family: 'DM Sans', sans-serif;
 }
 .form-box {
 	height: 480px;
@@ -23,7 +26,6 @@ h1{
 	margin: 8% auto;
 	padding: 5px;
 	overflow: hidden;
-	animation: appear 1s;
 	border-radius: 30px;
 	background-color: #14141B;
 }
@@ -52,7 +54,6 @@ h1{
 	position: relative;
 	color: #6C6C71;
 	transition-timing-function: ease-in-out;
-	font-family: 'DM Sans', sans-serif;
 }
 #btn {
 	position: absolute;
@@ -85,7 +86,6 @@ h1{
 input:focus {
 	border-color: #e9e9e9;
 	transition-timing-function: ease-in-out;
-	font-family: 'DM Sans', sans-serif;
 }
 .submit-btn {
 	width: 85%;
@@ -110,14 +110,13 @@ input:focus {
 	cursor: pointer;
 	display: block;
 	margin: auto;
-	background: #4F4F54;
+	background: #E2E2E3;
 	border: 0;
+	color: #4F4F54;
 	outline: none;
 	border-radius: 30px;
 	margin-top: 30.5px;
-	box-shadow: 0 0 25px 0.5px #8A8A8D;
 	transition-timing-function: ease-in-out;
-	font-family: 'DM Sans', sans-serif;
 }
 .back-btn {
 	width: 85%;
@@ -142,12 +141,12 @@ input:focus {
 	cursor: pointer;
 	display: block;
 	margin: auto;
-	background: #4F4F54;
+	background: #E2E2E3;
 	border: 0;
+	color: #4F4F54;
 	outline: none;
 	border-radius: 30px;
 	margin-top: 20px;
-	box-shadow: 0 0 25px 0.5px #8A8A8D;
 	transition-timing-function: ease-in-out;
 	font-family: 'DM Sans', sans-serif;
 }

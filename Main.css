@@ -1,12 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Quicksand&display=swap');
-
+@keyframes appear {
+	0% {
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+}
 body {
+    animation: appear 0.5s;
     margin: 0;
     font-family: 'DM Sans', sans-serif;
     background-color: #14141b;
     color: white;
 }
- 
 .main-container {
     height: 100%;
 }
@@ -61,7 +68,7 @@ h2.header-1 {
     margin-left: 3px;
     border: none;
     border-radius: 2px;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     color: #4F4F54;
     padding-top: 1px;
     padding-bottom: 1px;
@@ -91,6 +98,10 @@ h2.header-1 {
 	color: white;
     outline: none;
 	transition-duration: 0.3s;
+}
+
+.sortandsearch {
+    margin: auto;
 }
 
 ::placeholder {
@@ -186,14 +197,14 @@ input[type="text"]:focus {
     color: white;
     background-color: transparent;
     outline: none;
-    transition-duration: .4s;
+    transition-duration: .3s;
 }
 
   /* Style the active sorting button */
 .button-sort button.active {
     background-color: #4F4F54;
     color: white;
-    transition-duration: .4s;
+    transition-duration: .3s;
 }
 
   /* Style the sorting buttons on hover */
