@@ -209,7 +209,6 @@ $html = '<!DOCTYPE html>
         cursor: pointer;
       }
       .gallery figcaption {
-        font-family: Arial, Helvetica, sans-serif;
         font-size: 1.0em;
         text-align: center;
         color: #fff;
@@ -229,6 +228,7 @@ $html = '<!DOCTYPE html>
       }
       .gallery .caption-non-full {
         display: block;
+        text-align: center;
       }
       .gallery .caption-full {
         display: none;
@@ -241,6 +241,7 @@ $html = '<!DOCTYPE html>
         padding: 10px;
         font-size: 16px;
         z-index: 9999;
+        text-align: center;
       }
       .gallery img.full + .caption-full {
         display: block;
@@ -348,13 +349,17 @@ $html = '<!DOCTYPE html>
       $img = basename($i);
       $caption = substr($img, 0, strrpos($img, "."));
       printf("<figure>
+
                 <img src=\'images/%s\'>
+
                 <figcaption class=\'caption-non-full\'>
-                  <center>%s</center>
+                  %s
                 </figcaption>
+
                 <figcaption class=\'caption-full\'>
-                  <center>%s<br>Artist: Artist Name<br>Date Uploaded: DD/MM/YYYY</center>
+                  %s<br>Artist: Artist Name<br>Date Uploaded: DD/MM/YYYY
                 </figcaption>
+
               </figure>",
         rawurlencode($img), $caption, $caption
       );

@@ -67,7 +67,6 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
         }
 
         .image-container figcaption {
-          font-family: Arial, Helvetica, sans-serif;
           font-size: 1.0em;
           text-align: center;
           color: #fff;
@@ -96,6 +95,7 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
           padding: 10px;
           font-size: 16px;
           z-index: 9999;
+          text-align: center;
         }
         .image-container img.full + .caption-full {
           display: block;
@@ -120,12 +120,10 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
               img.classList.toggle("full");
 
               // Get the Corresponding Caption Elements
-              var captionNonFull = img.nextElementSibling;
-              var captionFull = img.nextElementSibling.nextElementSibling;
+              var captionFull = img.nextElementSibling;
 
               if (img.classList.contains("full")) {
                 // Image is in Full-Screen Mode
-                captionNonFull.style.display = "none";
                 captionFull.style.display = "block";
                 
                 // Disable Scrolling
@@ -133,7 +131,6 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
                 
               } else {
                 // Image is Not in Full-Screen Mode
-                captionNonFull.style.display = "block";
                 captionFull.style.display = "none";
                 
                 // Enable Scrolling
@@ -144,7 +141,7 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
         }
     });
     </script>
-    
+
 
 </head>
   <body>
@@ -152,7 +149,7 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
   <header class="topnav">
         <div class="topnav-left">
         <a href="Main.php">higherBooru</a>
-</div>
+        </div>
 
         <div class="topnav-right">
         <?php
@@ -161,12 +158,12 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
           echo '<a href="logout.php?">Logout</a>';
           echo '<a href="upload.php" value="upload_button">Upload</a>';
         }
-          elseif(empty($_SESSION['user_id'])) {
-            echo '<a href="login.php?">Login/Register</a>';
-          }
-?>
+        elseif(empty($_SESSION['user_id'])) {
+          echo '<a href="login.php?">Login/Register</a>';
+        }
+        ?>
         </div>
-</header>
+  </header>
 
     <div class="main" id="page-content">
       <main class="main-1">
@@ -216,6 +213,7 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
               echo '<a href="artist/' . $artistName . '.php">' . $artistName . '</a>';
               echo '</div>';
               echo '<img src="images/' . $imageName . '">';
+              echo '<p class="caption-full">' . $imageName . '<br>Artist: ' . $artistName . '<br>Date Uploaded: DD/MM/YYYY</center></p>';
               echo '</div>';
             } else {
               // Assuming $result is the file path of a directory image
@@ -287,4 +285,3 @@ echo '</div>';
 
   </body>
 </html>
-

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>higherBooru</title>
+    
+    <title>HigherBooru</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" 
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-          
+
     <style>
       /* Add styles for the navigation bar */
       .navbar {
@@ -143,6 +144,7 @@
         cursor: pointer;
       }
       .gallery figcaption {
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 1.0em;
         text-align: center;
         color: #fff;
@@ -162,7 +164,6 @@
       }
       .gallery .caption-non-full {
         display: block;
-        text-align: center;
       }
       .gallery .caption-full {
         display: none;
@@ -175,7 +176,6 @@
         padding: 10px;
         font-size: 16px;
         z-index: 9999;
-        text-align: center;
       }
       .gallery img.full + .caption-full {
         display: block;
@@ -251,7 +251,7 @@
 
           <img src="Default_pfp.png" width="420" height="420"/><br><br><br>
 
-          <h1>Artist Name</h1>
+          <h1>$user_name</h1>
           <br>
 
           <h5 style="color:gray;">
@@ -283,17 +283,13 @@
       $img = basename($i);
       $caption = substr($img, 0, strrpos($img, "."));
       printf("<figure>
-
                 <img src='images/%s'>
-
                 <figcaption class='caption-non-full'>
-                  %s
+                  <center>%s</center>
                 </figcaption>
-
                 <figcaption class='caption-full'>
-                  %s<br>Artist: Artist Name<br>Date Uploaded: DD/MM/YYYY
+                  <center>%s<br>Artist: Artist Name<br>Date Uploaded: DD/MM/YYYY</center>
                 </figcaption>
-
               </figure>",
         rawurlencode($img), $caption, $caption
       );
