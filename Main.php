@@ -60,6 +60,92 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="./Main.css" rel="stylesheet" type="text/css"/>
 
+    <style>
+        .image-container figure {
+          margin: 0;
+          background: transparent;
+        }
+
+        .image-container figcaption {
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 1.0em;
+          text-align: center;
+          color: #fff;
+          padding: 5px 10px;
+        }
+
+        /* Fullscreen Image */
+        .image-container .full {
+          position: fixed;
+          top: 0; left: 0; z-index: 999;
+          width: 100%; height: 100%;
+          object-fit: contain;
+          background-color: rgba(16, 16, 22, 0.6);
+          cursor: pointer;
+          padding-top: 2rem;
+          padding-bottom: 12rem;
+        }
+        .image-container .caption-full {
+          display: none;
+          position: fixed;
+          top: 85%;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: rgba(0, 0, 0, 0.6);
+          color: #fff;
+          padding: 10px;
+          font-size: 16px;
+          z-index: 9999;
+        }
+        .image-container img.full + .caption-full {
+          display: block;
+        }
+
+        /* Animation */
+        .image-container { overflow-x: hidden; }
+        .image-container img { transition: all 0.3s; }
+    </style>
+
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        // Get All Images
+        var all = document.querySelectorAll(".image-container img");
+
+        // Click on Image to Toggle Fullscreen
+        if (all.length > 0) {
+          for (let img of all) {
+            img.onclick = () => {
+              // Toggle Full-Screen Class
+              img.classList.toggle("full");
+
+              // Get the Corresponding Caption Elements
+              var captionNonFull = img.nextElementSibling;
+              var captionFull = img.nextElementSibling.nextElementSibling;
+
+              if (img.classList.contains("full")) {
+                // Image is in Full-Screen Mode
+                captionNonFull.style.display = "none";
+                captionFull.style.display = "block";
+                
+                // Disable Scrolling
+                document.body.style.overflow = "hidden";
+                
+              } else {
+                // Image is Not in Full-Screen Mode
+                captionNonFull.style.display = "block";
+                captionFull.style.display = "none";
+                
+                // Enable Scrolling
+                document.body.style.overflow = "auto";
+              }
+            };
+          }
+        }
+    });
+    </script>
+    
+
 </head>
   <body>
   <main class="main-container">
