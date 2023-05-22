@@ -15,7 +15,7 @@ body {
     align-items: center;
 }
 h1 {
-	font-family: 'DM Sans', sans-serif;
+    font-family: 'Quicksand', sans-serif;
 	margin-top: 3.5rem;
 	margin-bottom: 3rem;
 	font-size: 40px;
@@ -36,15 +36,9 @@ h1 {
 form {
 	font-family: 'DM Sans', sans-serif;
 }
-.input-group {
-	top: 180px;
-	position: absolute;
-	width: 280px;
-	transition: .5s;
-}
-.input-field {
+.input-title {
 	width: 50%;
-	padding: 5px 0px;
+	padding: 5px 1.5px;
 	margin-top: 30px;
 	margin-bottom: 30px;
 	border-left: 0;
@@ -57,15 +51,43 @@ form {
 	color: white;
 	font-family: 'DM Sans', sans-serif;
 }
-input:focus {
+.input-title:focus {
 	border-color: #e9e9e9;
 	transition-timing-function: ease-in-out;
 }
+.input-tags {
+	width: 500px;
+	margin: 5px 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+	border-bottom: 1px solid #858585;
+    border-radius: 3px;
+	padding: 5px 5px;
+	background: #8A8A8D;
+	color: white;
+    outline: none;
+	font-family: 'DM Sans', sans-serif;
+	transition-duration: 0.3s;
+}
+.input-tags:focus {
+	margin: 5px 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+	border-bottom: 1px solid #858585;
+    border-radius: 3px;
+	background: transparent;
+	color: white;
+    outline: none;
+    transition-timing-function: ease-in-out;
+}
+.input-tags::placeholder {
+	color: white;
+	opacity: 0.8;
+}
 input[type="file"] {
 	display: none;
-}
-input[type="checkbox"] {
-	border-radius: 5px;
 }
 input {
 	font-family: 'DM Sans', sans-serif;

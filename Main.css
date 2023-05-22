@@ -8,7 +8,6 @@
 	}
 }
 body {
-    animation: appear 0.5s;
     margin: 0;
     font-family: 'DM Sans', sans-serif;
     background-color: #14141b;
@@ -23,7 +22,7 @@ body {
     backdrop-filter: blur(3px);
     position: sticky;
     top: 0px;
-    z-index: 100;
+    z-index: 1;
     border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 .topnav-right {
@@ -100,10 +99,6 @@ h2.header-1 {
 	transition-duration: 0.3s;
 }
 
-.sortandsearch {
-    margin: auto;
-}
-
 ::placeholder {
     color: white;
     opacity: 0.8;
@@ -129,6 +124,7 @@ input[type="text"]:focus {
     grid-gap: 10px;
     padding-left: 16rem;
     padding-right: 16rem;
+    animation: appear 1s;
 }
       
 /* Set up the image containers */
@@ -270,13 +266,40 @@ input[type="text"]:focus {
     border-radius: 5px;
     align-items: center;
 }
-      
-/* pagination button ellipses only. NOT CSS NEEDED, THIS IS ALWAYS TO BE INACTIVE */
-/*.page-navigation span:hover {
-    background-color: #ccc;
-} */
-/* pagination button ellipses only. NOT CSS NEEDED, THIS IS ALWAYS TO BE INACTIVE */
-/*.page-navigation span.active {
-    background-color: #ddd;
-} */
 
+  /* Fullscreen Image */
+.image-container .full {
+    position: fixed;
+    width: 100%; height: 105%;
+    top: -3%; left: 0; z-index: 999;
+    object-fit: contain;
+    background-color: rgba(16, 16, 22, 0.6);
+    cursor: pointer;
+    margin-top: 2rem;
+    padding-top: 35px;
+    padding-bottom: 12rem;
+}
+.image-container .caption-full {
+    display: none;
+    position: fixed;
+    top: 88%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 10px;
+    font-size: 16px;
+    z-index: 9999;
+    text-align: center;
+}
+.image-container img.full + .caption-full {
+    display: block;
+}
+
+  /* Animation */
+.image-container { 
+    overflow-x: hidden; 
+}
+.image-container img { 
+    transition: all 0.2s; 
+}

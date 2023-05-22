@@ -21,7 +21,7 @@ Image Upload PHP
 <br>
 <form action="index.php" method="post" enctype="multipart/form-data">
     <h1>higherBooru</h1>
-<input class="input-field" type="text" name="title" placeholder="Title" required></input>
+<input class="input-title" type="text" name="title" placeholder="Title" required></input>
       <br>
       <div class = "error-message">
       <?php if (isset($_GET['error'])): ?>
@@ -45,16 +45,7 @@ Upload Image
 </label>
 <br>
 <form action="includes/index.php" method ="POST">
-<input type="text" name="tags[]" placeholder="Tags"></input>
-
-
-<!--<input type="checkbox" name="tags[]" value="Girl">#Girl</input>
-<input type="checkbox" name="tags[]" value="Kawaii">#Kawaii</input>
-<input type="checkbox" name="tags[]" value="cute">#Cute</input>
-<input type="checkbox" name="tags[]" value="blackmen">#Boy</input>
-<input type="checkbox" name="tags[]" value="blackmen">#Colorful</input>
-<input type="checkbox" name="tags[]" value="blackmen">#BnW</input>
-<input type="checkbox" name="tags[]" value="sexymen">#Anime</input> <br> -->
+<input class="input-tags" type="text" name="tags[]" placeholder="Tags"></input>
 <input type="submit" class="upload-btn" name="submit" value ="Upload">
 <button class = "back-btn" onclick="history.back()">Back</button>
    </form>
