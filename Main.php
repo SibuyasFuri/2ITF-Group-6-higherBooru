@@ -6,11 +6,32 @@ include("functions.php");
 // Get the search query
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Modify the SQL query to include the search condition
+// Get the sorting parameter from the query string
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'latest';
+
+// Modify the SQL query to include the necessary columns
 if (!empty($searchQuery)) {
-  $query = "SELECT images.name, images.image_url, users.user_name, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id WHERE users.user_name LIKE '%$searchQuery%' OR images.name LIKE '%$searchQuery%' OR images.tags LIKE '%$searchQuery%'";
+  $query = "SELECT images.name, images.image_url, users.user_name FROM images JOIN users ON images.user_id = users.user_id WHERE users.user_name LIKE '%$searchQuery%' OR images.name LIKE '%$searchQuery%' OR images.tags LIKE '%$searchQuery%'";
 } else {
-  $query = "SELECT images.name, images.image_url, users.user_name, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id";
+  $query = "SELECT images.name, images.image_url, users.user_name FROM images JOIN users ON images.user_id = users.user_id";
+}
+
+// Add the sorting condition to the SQL query
+switch ($sort) {
+  case 'oldest':
+    // Sort by file's last modified timestamp in ascending order
+    $query .= " ORDER BY images.image_url ASC";
+    break;
+  case 'az':
+    $query .= " ORDER BY images.name ASC";
+    break;
+  case 'za':
+    $query .= " ORDER BY images.name DESC";
+    break;
+  default:
+    // Sort by file's last modified timestamp in descending order (default: latest)
+    $query .= " ORDER BY images.image_url DESC";
+    break;
 }
 
 // Execute the query
@@ -49,7 +70,6 @@ $combinedOffset = ($page - 1) * 20;
 $combinedResults = array_merge(mysqli_fetch_all($result, MYSQLI_ASSOC), $directoryImages);
 
 $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
-
 ?>
 
 <!DOCTYPE html>
@@ -201,32 +221,27 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
     <div class="grid" id="image-grid">
       
     <?php
-        // Fetch the search results from the database and directory images
-        if (!empty($currentPageResults)) {
-          foreach ($currentPageResults as $result) {
-            if (is_array($result)) {
+    // Fetch the search results from the combined results
+    if (!empty($currentPageResults)) {
+      foreach ($currentPageResults as $result) {
+        if (is_array($result)) {
+          $artistName = $result['user_name'];
+          $imageName = $result['image_url'];
 
-              $imageTitle = $result['name'];
-              $artistName = $result['user_name'];
-              $imageName = $result['image_url'];
-              $uploadedDate = $result['dateUploaded'];
-
-              echo '<div class="image-container">';
-              echo '<div class="artist-name-container">';
-              echo '<a href="artist/' . $artistName . '.php">' . $artistName . '</a>';
-              echo '</div>';
-              echo '<img src="images/' . $imageName . '">';
-              echo '<p class="caption-full">'.'Title: ' . $imageTitle . '<br>Artist: ' . $artistName . '<br>Date Uploaded: '. $uploadedDate  . '</center></p>'; 
-              
-              echo '</div>';
-            } else {
-              // Assuming $result is the file path of a directory image
-              echo '<div class="image-container">';
-              echo '<img src="' . $result . '">';
-              echo '</div>';
-            }
-          }
+          echo '<div class="image-container">';
+          echo '<div class="artist-name-container">';
+          echo '<a href="artist/' . $artistName . '.php">' . $artistName . '</a>';
+          echo '</div>';
+          echo '<img src="images/' . $imageName . '">';
+          echo '</div>';
+        } else {
+          // Assuming $result is the file path of a directory image
+          echo '<div class="image-container">';
+          echo '<img src="' . $result . '">';
+          echo '</div>';
         }
+      }
+    }
 
         // Display a message if no results found
         if (empty($currentPageResults)) {
@@ -236,54 +251,55 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
       </div>
 
       <?php
-// Calculate the range of visible pages
-$visibleRange = 5;
 
-// Calculate the starting and ending page numbers for the visible range
-$startPage = max(1, $page - $visibleRange);
-$endPage = min($totalCombinedPages, $page + $visibleRange);
+      // Calculate the range of visible pages
+      $visibleRange = 5;
 
-// Display the page navigation links
-echo '<div class="page-navigation">';
+      // Calculate the starting and ending page numbers for the visible range
+      $startPage = max(1, $page - $visibleRange);
+      $endPage = min($totalCombinedPages, $page + $visibleRange);
 
-// Link to first page
-if ($page > 1) {
-  echo '<a href="?page=1">&laquo;</a>';
-} else {
-  echo '<span class="disabled">&laquo;</span>';
-}
+      // Display the page navigation links
+      echo '<div class="page-navigation">';
 
-// Link to previous page
-if ($page > 1) {
-  echo '<a href="?page=' . ($page - 1) . '">&#8249;</a>';
-} else {
-  echo '<span class="disabled">&#8249;</span>';
-}
+      // Link to first page with sorting parameter
+      if ($page > 1) {
+        echo '<a href="?page=1&sort=' . $sort . '">&laquo;</a>';
+      } else {
+        echo '<span class="disabled">&laquo;</span>';
+      }
 
-// Output links to individual pages
-for ($p = $startPage; $p <= $endPage; $p++) {
-  if ($p == $page) {
-    echo '<span class="current-page">' . $page . '</span>';
-  } else {
-    echo '<a href="?page=' . $p . '">' . $p . '</a>';
-  }
-}
+      // Link to previous page with sorting parameter
+      if ($page > 1) {
+        echo '<a href="?page=' . ($page - 1) . '&sort=' . $sort . '">&#8249;</a>';
+      } else {
+        echo '<span class="disabled">&#8249;</span>';
+      }
 
-// Link to next page
-if ($page < $totalCombinedPages) {
-  echo '<a href="?page=' . ($page + 1) . '">&#8250;</a>';
-} else {
-  echo '<span class="disabled">&#8250;</span>';
-}
+      // Output links to individual pages with sorting parameter
+      for ($p = $startPage; $p <= $endPage; $p++) {
+        if ($p == $page) {
+          echo '<span class="current-page">' . $page . '</span>';
+        } else {
+          echo '<a href="?page=' . $p . '&sort=' . $sort . '">' . $p . '</a>';
+        }
+      }
 
-// Link to last page
-if ($page < $totalCombinedPages) {
-  echo '<a href="?page=' . $totalCombinedPages . '">&raquo;</a>';
-} else {
-  echo '<span class="disabled">&raquo;</span>';
-}
+      // Link to next page with sorting parameter
+      if ($page < $totalCombinedPages) {
+        echo '<a href="?page=' . ($page + 1) . '&sort=' . $sort . '">&#8250;</a>';
+      } else {
+        echo '<span class="disabled">&#8250;</span>';
+      }
 
-echo '</div>';
+      // Link to last page with sorting parameter
+      if ($page < $totalCombinedPages) {
+        echo '<a href="?page=' . $totalCombinedPages . '&sort=' . $sort . '">&raquo;</a>';
+      } else {
+        echo '<span class="disabled">&raquo;</span>';
+      }
+
+      echo '</div>';
 ?>
   </main>
 
