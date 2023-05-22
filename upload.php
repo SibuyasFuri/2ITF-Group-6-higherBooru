@@ -45,14 +45,16 @@ Upload Image
 </label>
 <br>
 <form action="includes/index.php" method ="POST">
-<label for="">Tags: </label>
-<input type="checkbox" name="tags[]" value="Girl">#Girl</input>
+<input type="text" name="tags[]" placeholder="Tags"></input>
+
+
+<!--<input type="checkbox" name="tags[]" value="Girl">#Girl</input>
 <input type="checkbox" name="tags[]" value="Kawaii">#Kawaii</input>
 <input type="checkbox" name="tags[]" value="cute">#Cute</input>
 <input type="checkbox" name="tags[]" value="blackmen">#Boy</input>
 <input type="checkbox" name="tags[]" value="blackmen">#Colorful</input>
 <input type="checkbox" name="tags[]" value="blackmen">#BnW</input>
-<input type="checkbox" name="tags[]" value="sexymen">#Anime</input> <br>
+<input type="checkbox" name="tags[]" value="sexymen">#Anime</input> <br> -->
 <input type="submit" class="upload-btn" name="submit" value ="Upload">
 <button class = "back-btn" onclick="history.back()">Back</button>
    </form>

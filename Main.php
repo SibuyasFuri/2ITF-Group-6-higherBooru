@@ -8,9 +8,9 @@ $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Modify the SQL query to include the search condition
 if (!empty($searchQuery)) {
-  $query = "SELECT images.name, images.image_url, users.user_name FROM images JOIN users ON images.user_id = users.user_id WHERE users.user_name LIKE '%$searchQuery%' OR images.name LIKE '%$searchQuery%' OR images.tags LIKE '%$searchQuery%'";
+  $query = "SELECT images.name, images.image_url, users.user_name, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id WHERE users.user_name LIKE '%$searchQuery%' OR images.name LIKE '%$searchQuery%' OR images.tags LIKE '%$searchQuery%'";
 } else {
-  $query = "SELECT images.name, images.image_url, users.user_name FROM images JOIN users ON images.user_id = users.user_id";
+  $query = "SELECT images.name, images.image_url, users.user_name, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id";
 }
 
 // Execute the query
@@ -154,7 +154,7 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
         <div class="topnav-right">
         <?php
         if(isset($_SESSION['user_id'])){
-
+        
           echo '<a href="logout.php?">Logout</a>';
           echo '<a href="upload.php" value="upload_button">Upload</a>';
         }
@@ -205,15 +205,19 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
         if (!empty($currentPageResults)) {
           foreach ($currentPageResults as $result) {
             if (is_array($result)) {
+
+              $imageTitle = $result['name'];
               $artistName = $result['user_name'];
               $imageName = $result['image_url'];
+              $uploadedDate = $result['dateUploaded'];
 
               echo '<div class="image-container">';
               echo '<div class="artist-name-container">';
               echo '<a href="artist/' . $artistName . '.php">' . $artistName . '</a>';
               echo '</div>';
               echo '<img src="images/' . $imageName . '">';
-              echo '<p class="caption-full">' . $imageName . '<br>Artist: ' . $artistName . '<br>Date Uploaded: DD/MM/YYYY</center></p>';
+              echo '<p class="caption-full">'.'Title: ' . $imageTitle . '<br>Artist: ' . $artistName . '<br>Date Uploaded: '. $uploadedDate  . '</center></p>'; 
+              
               echo '</div>';
             } else {
               // Assuming $result is the file path of a directory image

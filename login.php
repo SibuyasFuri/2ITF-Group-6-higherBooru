@@ -63,7 +63,41 @@ $query = "INSERT INTO users (user_id, user_name, password) VALUES ('$user_id', '
 mysqli_query($conn, $query);
 
 // Create the HTML page for the user
-$html = '<!DOCTYPE html>
+$html = 
+'
+<?php
+session_start();
+include("../db_conn.php");
+include("../functions.php");
+$userDisplay = "";
+$userID = "";
+$userDate = "";
+
+
+if (!empty($searchQuery)) {
+  
+  $query = "SELECT images.name, images.image_url, images.user_id, users.user_name, images.dateUploaded FROM images";
+} else {
+  $query = "SELECT images.name, images.image_url, images.user_id, users.user_name, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id";
+}
+
+$result = mysqli_query($conn, $query);
+
+
+if ($result && mysqli_num_rows($result) > 0) {
+  while ($row = mysqli_fetch_assoc($result)) {
+    // Process each row
+    $userDisplay = $row[\'user_name\']; 
+    $userID = $row[\'user_id\'];
+    $userDate = $row[\'dateUploaded\'];
+  }
+}
+
+?>
+
+<!DOCTYPE html>
+
+
 <html>
   <head>
     
@@ -291,7 +325,6 @@ $html = '<!DOCTYPE html>
     });
     </script>
 
-
 </head>
   <body>
     <div class="navbar">
@@ -317,18 +350,39 @@ $html = '<!DOCTYPE html>
 
           <img src="Default_pfp.png" width="420" height="420"/><br><br><br>
 
-          <h1>$user_name</h1>
+          <h1><?php echo $userDisplay; ?></h1>
           <br>
 
           <h5 style="color:gray;">
-          UID: 75425647 <br> Account Created: DD/MM/YYYY
+          UID: <?php echo $userID ?><br> Account Created: <?php echo $userDate ?>
           </h5><br><br>
+          <h4 id=\'description\'>
+          User Description
+        </h4>
+        <button id="changeDesc">Edit</button>
+        
+          
+        <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    var labelElement = document.getElementById(\'description\');
+    var storedDescription = localStorage.getItem(\'userDescription\');
 
-          <h4>
-          The quick brown fox jumps over the lazy dog.<br> 
-          The quick brown fox jumps over the lazy dog.<br>
-          The quick brown fox jumps over the lazy dog.
-          </h4>
+    if (storedDescription) {
+      labelElement.textContent = storedDescription;
+    }
+
+    document.getElementById(\'changeDesc\').addEventListener(\'click\', function() {
+      var newText = prompt(\'Enter the new text for the label:\', storedDescription || \'\');
+
+      if (newText !== null && newText !== \'\') {
+        labelElement.textContent = newText;
+        localStorage.setItem(\'userDescription\', newText);
+      }
+    });
+  });
+</script>
+
+        
 
           </center><br><br><br><br><br><br>
 
@@ -379,12 +433,13 @@ file_put_contents($filename, $html);
 
 // Redirection
 header("Location: login.php");
-die;
+die();
     }
 	else {
         echo "Please Input Valid Data";
     }
 }
+
 ?>
 
 <html lang="en">
