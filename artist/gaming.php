@@ -44,9 +44,6 @@ if ($result && mysqli_num_rows($result) > 0) {
   $userDate = $row['dateUploaded'];
 }
 
-
-$query = "SELECT images.name, images.image_url, users.user_name, users.user_id, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id WHERE (users.user_name LIKE '%$searchQuery%' OR images.name LIKE '%$searchQuery%' OR images.tags LIKE '%$searchQuery%') AND users.user_name = '$userDisplay'";
-
 $perPage = 20;
 
 // Get the current page from the query string
@@ -352,6 +349,7 @@ $totalPages = ceil($numResults / $perPage);
 .button-sort {
     padding-left: 16rem;
     padding-bottom: 1rem;
+    display: none;
 }
 
 /* Style the sorting buttons */
@@ -367,6 +365,7 @@ $totalPages = ceil($numResults / $perPage);
     background-color: transparent;
     outline: none;
     transition-duration: .3s;
+    display: none;
 }
 
   /* Style the active sorting button */
@@ -374,12 +373,14 @@ $totalPages = ceil($numResults / $perPage);
     background-color: #4F4F54;
     color: white;
     transition-duration: .3s;
+    display: none;
 }
 
   /* Style the sorting buttons on hover */
 .button-sort button:hover {
     color: #A7A7AA;
     transition-timing-function: ease-in-out;
+    display: none;
 }
 
     </style>

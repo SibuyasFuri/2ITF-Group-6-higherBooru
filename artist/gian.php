@@ -1,14 +1,8 @@
+
 <?php
 session_start();
 include("../db_conn.php");
 include("../functions.php");
-
-// Initialize variables
-$userDisplay = '';
-$userID = '';
-$userDate = '';
-
-
 
 // Get the search query
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
@@ -38,6 +32,21 @@ switch ($sort) {
 }
 $result = mysqli_query($conn, $query);
 
+$userDisplay = "";
+$userID = "";
+$userDate = "";
+
+// Fetch user information
+if ($result && mysqli_num_rows($result) > 0) {
+  $row = mysqli_fetch_assoc($result);
+  $userDisplay = $row['user_name']; 
+  $userID = $row['user_id'];
+  $userDate = $row['dateUploaded'];
+}
+
+
+$query = "SELECT images.name, images.image_url, users.user_name, users.user_id, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id WHERE (users.user_name LIKE '%$searchQuery%' OR images.name LIKE '%$searchQuery%' OR images.tags LIKE '%$searchQuery%') AND users.user_name = '$userDisplay'";
+
 $perPage = 20;
 
 // Get the current page from the query string
@@ -57,8 +66,6 @@ $numResults = mysqli_num_rows($result);
 
 // Calculate the total number of pages for the search results
 $totalPages = ceil($numResults / $perPage);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -506,7 +513,7 @@ $totalPages = ceil($numResults / $perPage);
     <div class="gallery">
   <?php
   // Get Images in Gallery Folder
-  $dir = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "images" . DIRECTORY_SEPARATOR;
+ $dir = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "images" . DIRECTORY_SEPARATOR;
   $images = glob("$dir*.{jpg,jpeg,gif,png,bmp,webp}", GLOB_BRACE);
 
   
