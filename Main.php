@@ -191,11 +191,6 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
               echo '<p class="caption-full">'.'Title: ' . $imageTitle . '<br>Artist: ' . $artistName . '<br>Date Uploaded: '. $uploadedDate  . '</center></p>'; 
               
               echo '</div>';
-            } else {
-              // Assuming $result is the file path of a directory image
-              echo '<div class="image-container">';
-              echo '<img src="' . $result . '">';
-              echo '</div>';
             }
           }
         }
