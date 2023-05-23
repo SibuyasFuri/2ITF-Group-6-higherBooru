@@ -20,7 +20,7 @@ Image Upload PHP
    <div class="form-box">
 <br>
 <form action="index.php" method="post" enctype="multipart/form-data">
-    <h1>higherBooru</h1>
+    <h1>higherBooru Upload</h1>
 <input class="input-title" type="text" name="title" placeholder="Title" required></input>
       <br>
       <div class = "error-message">
