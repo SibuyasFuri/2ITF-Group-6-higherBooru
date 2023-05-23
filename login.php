@@ -27,6 +27,7 @@ if($result){
         $user_data = mysqli_fetch_assoc($result);
         if($user_data['password']=== $password){
             $_SESSION['user_id'] = $user_data['user_id'];
+            $_SESSION['user_name'] = $user_data['user_name'];
             header("Location: Main.php");
             die;
         }

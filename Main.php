@@ -105,7 +105,7 @@ $currentPageResults = array_slice($combinedResults, $combinedOffset, 20);
 
         <div class="topnav-right">
         <?php
-        if(isset($_SESSION['user_id'])){
+        if(isset($_SESSION['user_id'], $_SESSION['user_name'])){
           
           $artist = ($_SESSION['user_name']);
 
