@@ -84,7 +84,7 @@ include(\"../functions.php\");
 \$query = \"SELECT users.user_id 
           FROM users 
           WHERE users.user_name = '\$searchQuery'\";
-          
+
 // Execute the query to retrieve the user_id
 \$result = mysqli_query(\$conn, \$query);
 
@@ -98,6 +98,36 @@ if (mysqli_num_rows(\$result) > 0) {
             FROM images 
             JOIN users ON images.user_id = users.user_id 
             WHERE (users.user_id = '\$user_id' OR images.name LIKE '%\$searchQuery%' OR images.tags LIKE '%\$searchQuery%' OR images.name = '\$searchQuery')\";
+            
+// Add the sorting condition to the SQL query
+\$sort = isset(\$_GET['sort']) ? \$_GET['sort'] : 'latest'; // <-- Add this line to define \$sort
+switch (\$sort) {
+  case 'oldest':
+    // Sort by file's last modified timestamp in ascending order
+    \$query .= \" ORDER BY images.image_url ASC\";
+    break;
+  case 'az':
+   \$query .= \" ORDER BY images.name ASC\";
+    break;
+  case 'za':
+    \$query .= \" ORDER BY images.name DESC\";
+    break;
+  default:
+    // Sort by file's last modified timestamp in descending order (default: latest)
+    \$query .= \" ORDER BY images.image_url DESC\";
+    break;
+}
+
+  \$perPage = 20;
+
+  // Get the current page from the query string
+  \$page = isset(\$_GET['page']) ? \$_GET['page'] : 1;
+
+  // Calculate the offset for the database results
+  \$offset = (\$page - 1) * \$perPage;
+
+  // Modify the SQL query to include the pagination limit
+  \$query .= \" LIMIT \$offset, \$perPage\";
 
   // Execute the final query
   \$result = mysqli_query(\$conn, \$query);
@@ -130,42 +160,6 @@ if (mysqli_num_rows(\$result) > 0) {
   // Handle the case when no user is found with the given search query
   echo \"No user found.\";
 }
-
-// Get the sorting parameter from the query string
-\$sort = isset(\$_GET['sort']) ? \$_GET['sort'] : 'latest';
-
-// Modify the SQL query based on the sorting parameter
-switch (\$sort) {
-  case 'latest':
-    // Sort by file's last modified timestamp in descending order
-    \$query .= \" ORDER BY images.dateUploaded DESC\";
-    break;
-  case 'oldest':
-    // Sort by file's last modified timestamp in ascending order
-    \$query .= \" ORDER BY images.dateUploaded ASC\";
-    break;
-  case 'az':
-    \$query .= \" ORDER BY images.name ASC\";
-    break;
-  case 'za':
-    \$query .= \" ORDER BY images.name DESC\";
-    break;
-  default:
-    // Sort by file's last modified timestamp in descending order (default: latest)
-    \$query .= \" ORDER BY images.dateUploaded DESC\";
-    break;
-}
-
-\$perPage = 20;
-
-// Get the current page from the query string
-\$page = isset(\$_GET['page']) ? \$_GET['page'] : 1;
-
-// Calculate the offset for the database results
-\$offset = (\$page - 1) * \$perPage;
-
-// Modify the SQL query to include the pagination limit
-\$query .= \" LIMIT \$offset, \$perPage\";
 
 // Get the total number of search results from the database
 \$numResults = mysqli_num_rows(\$result);

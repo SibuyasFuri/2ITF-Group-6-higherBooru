@@ -13,6 +13,25 @@ if (!empty($searchQuery)) {
   $query = "SELECT images.name, images.image_url, users.user_name, images.dateUploaded FROM images JOIN users ON images.user_id = users.user_id";
 }
 
+// Add the sorting condition to the SQL query
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'latest'; // <-- Add this line to define $sort
+switch ($sort) {
+  case 'oldest':
+    // Sort by file's last modified timestamp in ascending order
+    $query .= " ORDER BY images.image_url ASC";
+    break;
+  case 'az':
+    $query .= " ORDER BY images.name ASC";
+    break;
+  case 'za':
+    $query .= " ORDER BY images.name DESC";
+    break;
+  default:
+    // Sort by file's last modified timestamp in descending order (default: latest)
+    $query .= " ORDER BY images.image_url DESC";
+    break;
+}
+
 // Execute the query
 $result = mysqli_query($conn, $query);
 
